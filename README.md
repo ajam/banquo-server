@@ -1,5 +1,7 @@
 # Banquo server
 
+Banquo server is a Node Express.js server set to run the [Banquo](http://github.com/mhkeller/banquo) library as a service.
+
 ### Installation
 
 `git clone` the repo onto your server.
@@ -24,7 +26,7 @@ Start the server, default is port 3000
 
 ### Using the service
 
-Let's say your server lives at `banquo.com`, You pass your percent-encoded options in through the URL hash such as:
+Let's say your server lives at `banquo.com`, you pass your percent-encoded options in through the URL hash such as:
 `banquo.com:3000/mode=save&url=america.aljazeera.com&viewport_width=2400&delay=1000&selector=%23map-canvas&css_hide=.map-zoom&out_file=map.png`
 
 These are your options
