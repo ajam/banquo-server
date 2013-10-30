@@ -8,7 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var banquo = require('banquo');
+var banquo = require('../banquo/src/banquo.js');
 var config = require('./config.json');
 
 var app = express();
@@ -62,7 +62,7 @@ function assembleSettings(opts){
 }
 
 app.enable("jsonp callback");
-app.get("/:opts", function(req, res) {
+app.get("/:opts*", function(req, res) {
 	if (whiteListHost(req.get('host'))){
 		var result = assembleSettings(req.params.opts);
 
