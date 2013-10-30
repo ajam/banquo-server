@@ -46,7 +46,14 @@ function errorResponse(res, type, more_info){
 	return false;
 }
 
+function percentDecode(string){
+	console.log(string)
+	return string.replace(/__/g, '/');
+}
+
 function assembleSettings(opts){
+	console.log('opts', opts)
+	opts = percentDecode(opts);
 	opts = opts.split('&');
 	var settings = {};
 	for(var i = 0; i < opts.length; i++){
@@ -62,7 +69,8 @@ function assembleSettings(opts){
 }
 
 app.enable("jsonp callback");
-app.get("/:opts*", function(req, res) {
+app.get("/:opts", function(req, res) {
+	console.log(req.params.opts)
 	if (whiteListHost(req.get('host'))){
 		var result = assembleSettings(req.params.opts);
 
