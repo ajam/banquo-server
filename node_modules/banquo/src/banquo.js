@@ -9,7 +9,8 @@ function banquo(opts, callback) {
     mode: 'renderBase64',
     viewport_width: 1440,
     delay: 5000,
-    selector: 'body'
+    selector: 'body',
+    css_file: ''
   }, opts);
 
   // Append 'http://' if protocol not specified
