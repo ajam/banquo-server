@@ -10,9 +10,13 @@ var http = require('http');
 var path = require('path');
 var banquo = require('banquo');
 var config = require('./config.json');
+var AWS = require('aws-sdk');
+var s3_config = require('./s3.json');
+AWS.config.loadFromPath(s3_config.credentials);
+console.log(s3_config.credentials)
+var s3 = new AWS.S3();
 
 var app = express();
-
 
 
 // all environments
@@ -68,6 +72,29 @@ function assembleSettings(opts){
 
 }
 
+function uploadToS3(image_data, timestamp){
+
+	var key_info = s3_config.output_path + timestamp + s3_config.file_name;
+
+	var img_blog = new Buffer(image_data, 'base64')
+  var data = {
+    Bucket: s3_config.bucket,
+    Key: key_info,
+    Body: img_blog,
+    ACL: 'public-read',
+    ContentType: 'image/png',
+    ContentLength: img_blog.length
+  };
+
+  s3.client.putObject( data , function (resp) {
+    if (resp == null){
+    	console.log('Successful upload: ' + key_info);
+    }else{
+      console.log('ERROR IN ' + timespance);
+    };
+  });
+}
+
 app.enable("jsonp callback");
 app.get("/:opts", function(req, res) {
 	console.log(req.params.opts)
@@ -76,7 +103,9 @@ app.get("/:opts", function(req, res) {
 
 		if (result.status){
 			banquo.capture(result.settings, function(image_data){
-				res.jsonp(200, {image_data: image_data})
+				var timestamp = new Date().getTime();
+				res.jsonp(200, {image_data: image_data, timestamp: timestamp});
+				uploadToS3(image_data, timestamp);
 			});
 		}else{
 			errorResponse(res, 'opts', result.error);

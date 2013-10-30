@@ -10,6 +10,7 @@
     "jade": "*",
     "node-phantom": "~0.2.5",
     "underscore": "~1.5.2",
-    "banquo": ">=0.1.4"
+    "banquo": ">=0.1.4",
+    "aws-sdk": ">=1.10.0"
   }
 }
