@@ -8,7 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var banquo = require('../banquo/src/banquo.js');
+var banquo = require('banquo');
 var config = require('./config.json');
 
 var app = express();
