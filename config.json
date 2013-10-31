@@ -2,7 +2,7 @@
 	"host_whitelist": [ "0.0.0.0", "localhost", "projects.aljazeera.com", "america.aljazeera.com"],
 	"error_msgs": {
 		"opts": "Please check the syntax and spelling of the variables you are passing in the url hash: ",
-		"domain": "You are attempting to access this server from an unauthorized domain To install this service on your own server, see it on Github: http://github.com/ajam/banquo-server"
+		"domain": "You are attempting to access this server from an unauthorized domain. To install this service on your own server, see it on Github: http://github.com/ajam/banquo-server"
 	},
 	"opts_whitelist": ["mode", "url", "viewport_width", "delay", "selector", "css_hide", "css_file", "out_file"]
 }

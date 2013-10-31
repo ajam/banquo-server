@@ -13,7 +13,6 @@ var config = require('./config.json');
 var AWS = require('aws-sdk');
 var s3_config = require('./s3.json');
 AWS.config.loadFromPath(s3_config.credentials);
-console.log(s3_config.credentials)
 var s3 = new AWS.S3();
 
 var app = express();
@@ -38,7 +37,6 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
-
 function whiteListHost(domain){
 	domain = domain.replace(':' + app.get('port'), '');
 	return (config.host_whitelist.indexOf(domain) != -1) ? true : false;
@@ -51,12 +49,10 @@ function errorResponse(res, type, more_info){
 }
 
 function percentDecode(string){
-	console.log(string)
 	return string.replace(/__/g, '/');
 }
 
 function assembleSettings(opts){
-	console.log('opts', opts)
 	opts = percentDecode(opts);
 	opts = opts.split('&');
 	var settings = {};
@@ -97,8 +93,7 @@ function uploadToS3(image_data, timestamp){
 
 app.enable("jsonp callback");
 app.get("/:opts", function(req, res) {
-	console.log(req.params.opts)
-	if (whiteListHost(req.get('host'))){
+	// if (whiteListHost(req.get('origin'))){
 		var result = assembleSettings(req.params.opts);
 
 		if (result.status){
@@ -111,10 +106,10 @@ app.get("/:opts", function(req, res) {
 			errorResponse(res, 'opts', result.error);
 		}
 
-	}else{
-		errorResponse(res, 'domain');
-		console.log('Attempt from unauthorized domain: ' + req.get('host'));
-	}
+	// }else{
+	// 	errorResponse(res, 'origin');
+	// 	console.log('Attempt from unauthorized domain: ' + req.get('host'));
+	// }
 });
 
 
