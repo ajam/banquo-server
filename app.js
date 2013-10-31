@@ -9,11 +9,11 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var banquo = require('banquo');
-var config = require('./config.json');
-var AWS = require('aws-sdk');
-var s3_config = require('./s3.json');
-AWS.config.loadFromPath(s3_config.credentials);
-var s3 = new AWS.S3();
+var config = require('./config.json')
+
+var AWS,
+    s3_config,
+    s3;
 
 var app = express();
 
@@ -69,6 +69,10 @@ function assembleSettings(opts){
 }
 
 function uploadToS3(image_data, timestamp){
+	AWS = require('aws-sdk');
+	s3_config = require('./s3.json');
+	AWS.config.loadFromPath(s3_config.credentials);
+	s3 = new AWS.S3();
 
 	var key_info = s3_config.output_path + timestamp + s3_config.file_name;
 
@@ -100,7 +104,9 @@ app.get("/:opts", function(req, res) {
 			banquo.capture(result.settings, function(image_data){
 				var timestamp = new Date().getTime();
 				res.jsonp(200, {image_data: image_data, timestamp: timestamp});
-				uploadToS3(image_data, timestamp);
+				if (config.upload_to_s3){
+					uploadToS3(image_data, timestamp);
+				}
 			});
 		}else{
 			errorResponse(res, 'opts', result.error);
