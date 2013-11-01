@@ -27,7 +27,9 @@ Start the server, default is port 3000
 ### Using the service
 
 Let's say your server lives at `banquo.com`, you pass your percent-encoded options in through the URL hash such as:
-`banquo.com:3000/mode=save&url=america.aljazeera.com&viewport_width=2400&delay=1000&selector=%23map-canvas&css_hide=.map-zoom&out_file=map.png`
+````
+banquo.com:3000/mode=save&url=america.aljazeera.com&viewport_width=2400&delay=1000&selector=%23map-canvas&css_hide=.map-zoom&out_file=map.png
+````
 
 These are your options
 
