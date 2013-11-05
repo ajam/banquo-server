@@ -82,7 +82,7 @@ css_hide | *Percent-encoded CSS selector* | Any divs you want to hide, such as z
 
 ### The response
 
-Your Banquo Server should now be returning you a JSONP response of image data and a UNIX timestamp. The timestamp is useful if you've uploaded the image to S3 since it will bake out the image with the following format name: `screenshot-1383626366826.png'
+Your Banquo Server should now be returning you a JSONP response of image data and a UNIX timestamp. The timestamp is useful if you've uploaded the image to S3 since it will bake out the image with the following format name: `screenshot-1383626366826.png`
 
 
 ### Contact
