@@ -1,0 +1,6 @@
+{
+  "credentials": "path/to/s3_keys.json",
+  "bucket": "bucket-name",
+  "output_path": "path/to/upload/",
+  "file_name": "screenshot-"
+}

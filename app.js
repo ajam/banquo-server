@@ -74,7 +74,7 @@ function uploadToS3(image_data, timestamp){
 	AWS.config.loadFromPath(s3_config.credentials);
 	s3 = new AWS.S3();
 
-	var key_info = s3_config.output_path + timestamp + s3_config.file_name + 'mhk';
+	var key_info = s3_config.output_path + s3_config.file_name + timestamp + '.png';
 
 	var img_blog = new Buffer(image_data, 'base64')
   var data = {
