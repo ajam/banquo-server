@@ -93,6 +93,3 @@ michael.keller@aljazeera.net
 [@mhkeller](http://twitter.com/mhkeller)
 
 Pull requests welcome.
-=======
-out_file | *String* | For `save` mode, the name of the file to write.
->>>>>>> f89cbe7432451995dc11f815bd78bff4f6fef067
