@@ -17,6 +17,10 @@ var AWS,
 
 var app = express();
 
+var error_msgs =  {
+	"opts": "Please check the syntax and spelling of the variables you are passing in the url hash: ",
+	"domain": "You are attempting to access this server from an unauthorized domain. To install this service on your own server, see it on Github: http://github.com/ajam/banquo-server"
+}
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -44,18 +48,14 @@ function whiteListHost(domain){
 
 function errorResponse(res, type, more_info){
 	more_info = (more_info) ? more_info : ''
-	res.jsonp(500, { error: config.error_msgs[type] + more_info })
+	res.jsonp(500, { error: error_msgs[type] + more_info })
 	return false;
 }
 
-function percentDecode(string){
-	return string.replace(/__/g, '/');
-}
-
-function assembleSettings(opts){
-	opts = percentDecode(opts);
+function assembleSettings(url, opts){
 	opts = opts.split('&');
 	var settings = {};
+	settings.url = url;
 	for(var i = 0; i < opts.length; i++){
 		 var opt_arr = opts[i].split('=');
 		if (config.opts_whitelist.indexOf(opt_arr[0]) != -1){
@@ -70,11 +70,11 @@ function assembleSettings(opts){
 
 function uploadToS3(image_data, timestamp){
 	AWS = require('aws-sdk');
-	s3_config = require('./s3.json');
+	s3_config = require(config.s3_config);
 	AWS.config.loadFromPath(s3_config.credentials);
 	s3 = new AWS.S3();
 
-	var key_info = s3_config.output_path + timestamp + s3_config.file_name;
+	var key_info = s3_config.output_path + timestamp + s3_config.file_name + 'mhk';
 
 	var img_blog = new Buffer(image_data, 'base64')
   var data = {
@@ -90,32 +90,28 @@ function uploadToS3(image_data, timestamp){
     if (resp == null){
     	console.log('Successful upload: ' + key_info);
     }else{
-      console.log('ERROR IN ' + timespance);
+      console.log('ERROR IN ' + timestamp);
     };
   });
 }
 
 app.enable("jsonp callback");
-app.get("/:opts", function(req, res) {
-	// if (whiteListHost(req.get('origin'))){
-		var result = assembleSettings(req.params.opts);
+app.get("/:url/:opts", function(req, res) {
 
-		if (result.status){
-			banquo.capture(result.settings, function(image_data){
-				var timestamp = new Date().getTime();
-				res.jsonp(200, {image_data: image_data, timestamp: timestamp});
-				if (config.upload_to_s3){
-					uploadToS3(image_data, timestamp);
-				}
-			});
-		}else{
-			errorResponse(res, 'opts', result.error);
-		}
+	var result = assembleSettings(req.params.url, req.params.opts);
 
-	// }else{
-	// 	errorResponse(res, 'origin');
-	// 	console.log('Attempt from unauthorized domain: ' + req.get('host'));
-	// }
+	if (result.status){
+		banquo.capture(result.settings, function(image_data){
+			var timestamp = new Date().getTime();
+			res.jsonp(200, {image_data: image_data, timestamp: timestamp});
+			if (config.upload_to_s3){
+				uploadToS3(image_data, timestamp);
+			}
+		});
+	}else{
+		errorResponse(res, 'opts', result.error);
+	}
+
 });
 
 

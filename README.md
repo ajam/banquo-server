@@ -10,6 +10,10 @@ Run
 
 `cd banquo-server && npm install`
 
+### Configuring
+
+After installation, if you 
+
 
 ### Starting the service
 
@@ -40,3 +44,4 @@ delay | *Number (milliseconds)* | How long to wait after the page has loaded bef
 selector | *Percent-encoded CSS selector* | The div you want to screenshot. Defaults to 'body' if not specified.
 css_hide | *Percent-encoded CSS selector* | Any divs you want to hide, such as zoom buttons on map. Defaults to none.
 out_file | *String* | For `save` mode, the name of the file to write.
+
