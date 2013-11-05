@@ -30,7 +30,6 @@ Start the server, default is port 3000
 
 ### Using the service
 
-<<<<<<< HEAD
 Let's say your server lives at `banquo.com`, the call has the following stucture:
 ````
 http://banquo.com:3000/:url/:options
@@ -56,12 +55,6 @@ function sendScreenshot(url, options){
     dataType: 'JSONP',
     callback: 'callback'
 	});
-=======
-Let's say your server lives at `banquo.com`, you pass your percent-encoded options in through the URL hash such as:
-````
-banquo.com:3000/mode=save&url=america.aljazeera.com&viewport_width=2400&delay=1000&selector=%23map-canvas&css_hide=.map-zoom&out_file=map.png
-````
->>>>>>> f89cbe7432451995dc11f815bd78bff4f6fef067
 
 }
 
@@ -86,7 +79,6 @@ viewport_width | *Number (pixels)* | The desired browser width.
 delay | *Number (milliseconds)* | How long to wait after the page has loaded before taking the screenshot. PhantomJS apparently waits for the page to load but if you have a map or other data calculations going on, you'll need to specify a wait time.
 selector | *Percent-encoded CSS selector* | The div you want to screenshot. Defaults to 'body' if not specified.
 css_hide | *Percent-encoded CSS selector* | Any divs you want to hide, such as zoom buttons on map. Defaults to none.
-<<<<<<< HEAD
 
 ### The response
 
