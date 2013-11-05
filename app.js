@@ -9,7 +9,7 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var banquo = require('banquo');
-var s3_config = require('./s3_config.json')
+var config = require('./config.json')
 
 var AWS,
     s3;
@@ -66,14 +66,14 @@ function assembleSettings(url, opts){
 
 function uploadToS3(image_data, timestamp){
 	AWS = require('aws-sdk');
-	AWS.config.loadFromPath(s3_config.credentials);
+	AWS.config.loadFromPath(config.credentials);
 	s3 = new AWS.S3();
 
-	var key_info = s3_config.output_path + s3_config.file_name + timestamp + '.png';
+	var key_info = config.output_path + config.file_name + timestamp + '.png';
 
 	var img_blog = new Buffer(image_data, 'base64')
   var data = {
-    Bucket: s3_config.bucket,
+    Bucket: config.bucket,
     Key: key_info,
     Body: img_blog,
     ACL: 'public-read',
@@ -92,19 +92,23 @@ function uploadToS3(image_data, timestamp){
 
 app.enable("jsonp callback");
 app.get("/:url/:opts", function(req, res) {
+	if (config.referer_whitelist.indexOf(req.headers.referer) != -1){
 
-	var result = assembleSettings(req.params.url, req.params.opts);
+		var result = assembleSettings(req.params.url, req.params.opts);
 
-	if (result.status){
-		banquo.capture(result.settings, function(image_data){
-			var timestamp = new Date().getTime();
-			res.jsonp(200, {image_data: image_data, timestamp: timestamp});
-			if (s3_config.upload_to_s3){
-				uploadToS3(image_data, timestamp);
-			}
-		});
+		if (result.status){
+			banquo.capture(result.settings, function(image_data){
+				var timestamp = new Date().getTime();
+				res.jsonp(200, {image_data: image_data, timestamp: timestamp});
+				if (config.upload_to_s3){
+					uploadToS3(image_data, timestamp);
+				}
+			});
+		}else{
+			errorResponse(res, 'opts', result.error);
+		}
 	}else{
-		errorResponse(res, 'opts', result.error);
+		errorResponse(res, 'domain', result.error);
 	}
 
 });

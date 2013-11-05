@@ -12,7 +12,10 @@ Run
 
 ### Configuring
 
-You have the option of uploading a `png` to S3 in addition to returning it as a base64 encoded string. To do this, fill out the fields in `s3_config.json`.
+To only allow traffic from whitelisted domains, enter the full path of the sites you are expecting to use this service in `config.json`. 
+TODO, make it so you can specify just the domain.
+
+You also have the option of uploading a `png` to S3 in addition to returning it as a base64 encoded string. To do this, fill out the fields in the config file.
 
 
 ### Starting the service

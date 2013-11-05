@@ -1,4 +1,5 @@
 {
+	"referer_whitelist": ["http://domain.com/path/to/index.html"],
 	"upload_to_s3": false,
   "credentials": "path/to/s3_keys.json",
   "bucket": "bucket-name",
