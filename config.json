@@ -1,5 +1,0 @@
-{
-	"opts_whitelist": ["mode", "url", "viewport_width", "delay", "selector", "css_hide", "css_file", "out_file"],
-	"upload_to_s3": true,
-	"s3_config": "./s3.json"
-}

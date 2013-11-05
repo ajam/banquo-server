@@ -9,10 +9,9 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var banquo = require('banquo');
-var config = require('./config.json')
+var s3_config = require('./s3_config.json')
 
 var AWS,
-    s3_config,
     s3;
 
 var app = express();
@@ -21,6 +20,8 @@ var error_msgs =  {
 	"opts": "Please check the syntax and spelling of the variables you are passing in the url hash: ",
 	"domain": "You are attempting to access this server from an unauthorized domain. To install this service on your own server, see it on Github: http://github.com/ajam/banquo-server"
 }
+
+var opts_whitelist = ["mode", "url", "viewport_width", "delay", "selector", "css_hide", "css_file", "out_file"];
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -41,11 +42,6 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
-function whiteListHost(domain){
-	domain = domain.replace(':' + app.get('port'), '');
-	return (config.host_whitelist.indexOf(domain) != -1) ? true : false;
-}
-
 function errorResponse(res, type, more_info){
 	more_info = (more_info) ? more_info : ''
 	res.jsonp(500, { error: error_msgs[type] + more_info })
@@ -58,7 +54,7 @@ function assembleSettings(url, opts){
 	settings.url = url;
 	for(var i = 0; i < opts.length; i++){
 		 var opt_arr = opts[i].split('=');
-		if (config.opts_whitelist.indexOf(opt_arr[0]) != -1){
+		if (opts_whitelist.indexOf(opt_arr[0]) != -1){
 			settings[opt_arr[0]] = opt_arr[1];
 		}else{
 			return {status: false, error: opt_arr[0]};
@@ -70,7 +66,6 @@ function assembleSettings(url, opts){
 
 function uploadToS3(image_data, timestamp){
 	AWS = require('aws-sdk');
-	s3_config = require(config.s3_config);
 	AWS.config.loadFromPath(s3_config.credentials);
 	s3 = new AWS.S3();
 
@@ -104,7 +99,7 @@ app.get("/:url/:opts", function(req, res) {
 		banquo.capture(result.settings, function(image_data){
 			var timestamp = new Date().getTime();
 			res.jsonp(200, {image_data: image_data, timestamp: timestamp});
-			if (config.upload_to_s3){
+			if (s3_config.upload_to_s3){
 				uploadToS3(image_data, timestamp);
 			}
 		});

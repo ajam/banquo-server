@@ -1,4 +1,5 @@
 {
+	"upload_to_s3": false,
   "credentials": "path/to/s3_keys.json",
   "bucket": "bucket-name",
   "output_path": "path/to/upload/",
