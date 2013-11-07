@@ -75,13 +75,13 @@ Or, if you want to be fancy, store your options as an object and write a functio
 
 These are your options that you can pass to Banquo.
 
-Key | Options | Description
---- | --- | ---
-url | *String* | The website you want to screenshot.
-viewport_width | *Number (pixels)* | The desired browser width.
-delay | *Number (milliseconds)* | How long to wait after the page has loaded before taking the screenshot. PhantomJS apparently waits for the page to load but if you have a map or other data calculations going on, you'll need to specify a wait time.
-selector | *Percent-encoded CSS selector* | The div you want to screenshot. Defaults to 'body' if not specified.
-css_hide | *Percent-encoded CSS selector* | Any divs you want to hide, such as zoom buttons on map. Defaults to none.
+Key | Required | Default | Options | Description
+--- | --- | --- | --- | ---
+url |yes| null | *String* | The website you want to screenshot.
+viewport_width |no| 1440 | *Number (pixels)* | The desired browser width. Settings this to a higher number will increase processing time.
+delay |no| 1000 | *Number (milliseconds)* | How long to wait after the page has loaded before taking the screenshot. PhantomJS apparently waits for the page to load but if you have a map or other data calculations going on, you'll need to specify a wait time.
+selector |no| `body` | *URI-component-encoded CSS selector* | The div you want to screenshot.
+css_hide |no| null | *URI-component-encoded CSS selector* | Any divs you want to hide, such as zoom buttons on map.
 
 ### The response
 
