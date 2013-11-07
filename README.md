@@ -2,6 +2,12 @@
 
 Banquo server is a Node Express.js server set to run the [Banquo](http://github.com/mhkeller/banquo) library as a service.
 
+### Dependencies
+
+You'll need [Node.js](http://nodejs.org/) and [PhantomJS](http://phantomjs.org/). If you're installing it on EC2 here are some good installation instructions. Make sure to change the version numbers to the current versions.
+[Node.js on EC2](http://iconof.com/blog/how-to-install-setup-node-js-on-amazon-aws-ec2-complete-guide/)
+[PhantomJS on EC2](http://phantomjs.org/build.html)
+
 ### Installation
 
 `git clone https://github.com/ajam/banquo-server.git`
