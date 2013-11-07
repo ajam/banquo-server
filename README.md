@@ -4,9 +4,9 @@ Banquo server is a Node Express.js server set to run the [Banquo](http://github.
 
 ### Installation
 
-`git clone` the repo onto your server.
+`git clone https://github.com/ajam/banquo-server.git`
 
-Run
+Then
 
 `cd banquo-server && npm install`
 
