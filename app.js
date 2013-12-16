@@ -51,7 +51,6 @@ function errorResponse(res, type, more_info){
 function assembleSettings(url, opts){
 	var settings = {};
 	settings.url = url;
-	console.log('opts', opts)
 	if (opts){
 		opts = opts.split('&');
 		for(var i = 0; i < opts.length; i++){
