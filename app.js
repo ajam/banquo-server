@@ -92,10 +92,8 @@ function uploadToS3(image_data, timestamp){
 
 app.enable("jsonp callback");
 app.get("/:url/:opts", function(req, res) {
-	if (config.referer_whitelist.indexOf(req.headers.referer) != -1){
-
+	if (config.disable_whitelist || config.referer_whitelist.indexOf(String(req.headers.referer)) != -1){
 		var result = assembleSettings(req.params.url, req.params.opts);
-
 		if (result.status){
 			banquo.capture(result.settings, function(image_data){
 				var timestamp = new Date().getTime();
