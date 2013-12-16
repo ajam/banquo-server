@@ -49,15 +49,18 @@ function errorResponse(res, type, more_info){
 }
 
 function assembleSettings(url, opts){
-	opts = opts.split('&');
 	var settings = {};
 	settings.url = url;
-	for(var i = 0; i < opts.length; i++){
-		 var opt_arr = opts[i].split('=');
-		if (opts_whitelist.indexOf(opt_arr[0]) != -1){
-			settings[opt_arr[0]] = opt_arr[1];
-		}else{
-			return {status: false, error: opt_arr[0]};
+	console.log('opts', opts)
+	if (opts){
+		opts = opts.split('&');
+		for(var i = 0; i < opts.length; i++){
+			var opt_arr = opts[i].split('=');
+			if (opts_whitelist.indexOf(opt_arr[0]) != -1){
+				settings[opt_arr[0]] = opt_arr[1];
+			}else{
+				return {status: false, error: opt_arr[0]};
+			}
 		}
 	}
 	return {status: true, settings: settings};
@@ -91,7 +94,7 @@ function uploadToS3(image_data, timestamp){
 }
 
 app.enable("jsonp callback");
-app.get("/:url/:opts", function(req, res) {
+app.get("/:url/:opts?*", function(req, res) {
 	if (config.disable_whitelist || config.referer_whitelist.indexOf(String(req.headers.referer)) != -1){
 		var result = assembleSettings(req.params.url, req.params.opts);
 		if (result.status){
