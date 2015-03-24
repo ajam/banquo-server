@@ -12,11 +12,15 @@ You'll need [Node.js](http://nodejs.org/) and [PhantomJS](http://phantomjs.org/)
 
 ### Installation
 
-`git clone https://github.com/ajam/banquo-server.git`
+````bash
+git clone https://github.com/ajam/banquo-server.git
+````
 
 Then
 
-`cd banquo-server && npm install`
+````bash
+cd banquo-server && npm install
+````
 
 ### Configuring
 
@@ -28,7 +32,8 @@ You also have the option of uploading a `png` to S3 in addition to returning it 
 ### Starting the service
 
 Install Forever
-````
+
+````bash
 npm install -g forever
 ````
 
@@ -41,6 +46,7 @@ Start the server, default is port 3000
 ### Using the service
 
 Let's say your server lives at `banquo.com`, the call has the following stucture:
+
 ````
 http://banquo.com:3000/:url/:options
 ````
@@ -55,7 +61,7 @@ That won't quite work, though, make sure you wrap your options with [`encodeURIC
 
 A full client set up would look something like this:
 
-````
+````js
 var url = 'america.aljazeera.com',
 		options = 'viewport_width=1000&delay=1000&selector=#map-canvas&css_hide=.map-zoom';
 
@@ -100,6 +106,7 @@ Your Banquo Server should now be returning you a JSONP response of image data an
 Any questions? Contact me here:
 
 michael.keller@aljazeera.net
+
 [@mhkeller](http://twitter.com/mhkeller)
 
 Pull requests welcome.
