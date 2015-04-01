@@ -108,7 +108,7 @@ app.get("/:url/:opts?*", function(req, res) {
 			errorResponse(res, 'opts', result.error);
 		}
 	}else{
-		errorResponse(res, 'domain', result.error);
+		errorResponse(res, 'incorrect referer, please look at your whitelist. Incoming refer is', String(req.headers.referer) );
 	}
 
 });
