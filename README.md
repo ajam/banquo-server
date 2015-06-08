@@ -26,6 +26,8 @@ cd banquo-server && npm install
 
 To only allow traffic from whitelisted domains, enter the full path of the sites you are expecting to use this service in `config.json`. Whitelisting is disabled by default because it is difficult to test locally since you won't always get a value for `req.headers.referer`. Best to only enable this when you move to production.
 
+It is also possible to blacklist certain domains by providing a list of such domains in `config.json` file.
+
 You also have the option of uploading a `png` to S3 in addition to returning it as a base64 encoded string. To do this, fill out the fields in the config file.
 
 
