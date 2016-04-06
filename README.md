@@ -1,5 +1,7 @@
 # Banquo server
 
+**This repository is no longer being maintained. Please use [https://github.com/mhkeller/banquo-server2](https://github.com/mhkeller/banquo-server2).**
+
 Banquo server is a Node Express.js server set to run the [Banquo](http://github.com/mhkeller/banquo) library as a service.
 
 ### Dependencies
