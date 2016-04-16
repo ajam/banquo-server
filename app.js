@@ -94,7 +94,9 @@ function uploadToS3(image_data, timestamp){
 
 app.enable("jsonp callback");
 app.get("/:url/:opts?*", function(req, res) {
-	if (config.disable_whitelist || config.referer_whitelist.indexOf(String(req.headers.referer)) != -1){
+	var referer = String(req.headers.referer);
+	if ((config.disable_whitelist || config.referer_whitelist.indexOf(referer) != -1) &&
+	    (config.disable_blacklist || config.referer_blacklist.indexOf(referer) == -1)){
 		var result = assembleSettings(req.params.url, req.params.opts);
 		if (result.status){
 			banquo.capture(result.settings, function(image_data){
@@ -108,7 +110,7 @@ app.get("/:url/:opts?*", function(req, res) {
 			errorResponse(res, 'opts', result.error);
 		}
 	}else{
-		errorResponse(res, 'incorrect referer, please look at your whitelist. Incoming refer is', String(req.headers.referer) );
+		errorResponse(res, 'incorrect referer, please look at your whitelist and/or blacklist. Incoming refer is', referer );
 	}
 
 });
